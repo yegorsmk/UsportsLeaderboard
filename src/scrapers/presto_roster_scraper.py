@@ -1,13 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 
-def sidearm_roster_scraper(roster_url):
+def presto_roster_scraper(roster_url):
     response = requests.get(roster_url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     athletes = []
 
-    names = soup.select('.sidearm-roster-player-name a')
+    names = soup.select('.roster-player, .player-card, .player-name')
 
     for tag in names:
         name = tag.get_text(strip=True)
@@ -17,9 +17,10 @@ def sidearm_roster_scraper(roster_url):
 
     return athletes
 
+
 if __name__ == "__main__":
-    url = "https://govikesgo.com/sports/swimming-and-diving/roster"
-    roster = sidearm_roster_scraper(url)
+    url = "https://teams.geegees.ca/sports/swim/2025-26/mroster"
+    roster = presto_roster_scraper(url)
 
     for name in roster:
         print(name)
