@@ -1,0 +1,4 @@
+notes:
+
+Ottawa U - prints names with a lot of space between first and last names
+ULaval - prints last and first names glued together

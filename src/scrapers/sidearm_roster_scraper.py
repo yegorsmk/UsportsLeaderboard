@@ -17,11 +17,11 @@ def sidearm_roster_scraper(roster_url):
 
     return athletes
 
-if __name__ == "__main__":
-    url = "https://govikesgo.com/sports/swimming-and-diving/roster"
-    roster = sidearm_roster_scraper(url)
+# if __name__ == "__main__":
+#     url = "https://govikesgo.com/sports/swimming-and-diving/roster"
+#     roster = sidearm_roster_scraper(url)
 
-    for name in roster:
-        print(name)
+#     for name in roster:
+#         print(name)
     
-    print(f"\nTotal athletes found: {len(roster)}")
+#     print(f"\nTotal athletes found: {len(roster)}")
