@@ -1,13 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_rosters(roster_url):
+def sidearm_roster_scraper(roster_url):
     response = requests.get(roster_url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     athletes = []
 
-    names = soup.select('.sidearm-table-player-name')
+    names = soup.select('.sidearm-roster-player-name a')
 
     for tag in names:
         name = tag.get_text(strip=True)
@@ -19,7 +19,7 @@ def scrape_rosters(roster_url):
 
 if __name__ == "__main__":
     url = "https://mcgillathletics.ca/sports/swimming-mens/roster"
-    roster = scrape_rosters(url)
+    roster = sidearm_roster_scraper(url)
 
     for name in roster:
         print(name)

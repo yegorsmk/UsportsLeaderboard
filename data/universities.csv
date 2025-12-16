@@ -1,2 +1,2 @@
-university_name, team_gender, roster_link
-McGill University, Male, https://mcgillathletics.ca/sports/swimming-mens/roster
+university_name, team_gender, platform, roster_link
+McGill University, Male, sidearm, https://mcgillathletics.ca/sports/swimming-mens/roster
