@@ -3,18 +3,11 @@ from bs4 import BeautifulSoup
 
 def unk_roster_scraper(roster_url):
     headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/121.0.0.0 Safari/537.36"
-        ),
+        "User-Agent": "Mozilla/5.0 (USPORTS scraper personal project)",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://www.google.com/",
-        "Connection": "keep-alive",
     }
 
-    response = requests.get(roster_url, headers=headers, timeout=15)
+    response = requests.get(roster_url, headers=headers, timeout=30)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     athletes = []

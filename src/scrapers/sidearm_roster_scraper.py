@@ -2,7 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 
 def sidearm_roster_scraper(roster_url):
-    response = requests.get(roster_url)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (USPORTS scraper personal project)",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    }
+
+    response = requests.get(roster_url, headers=headers, timeout=30)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     athletes = []
