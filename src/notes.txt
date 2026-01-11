@@ -2,3 +2,18 @@ notes:
 
 Ottawa U - prints names with a lot of space between first and last names
 ULaval - prints last and first names glued together
+
+
+short term:
+
+-> now i can get to season best page. need to store every athlete's url into db
+-> need main to use db info (athlete info (name, uni, url)) 
+-> need to store pbs into db
+-> possible issue: swimrankings blocks me for boting...maybe try to do 3-5 athletes at a time (other possible solns)
+
+
+long term:
+
+-> find a way to get athlete lists for random unis (York, Carleton, etc.)
+-> create front end for application
+-> db should already add new swimmers after new season, but make it remove old ones...so it stays clean
