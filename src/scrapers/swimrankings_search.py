@@ -14,7 +14,7 @@ def search_sr_athletes(name, szn_year, club_filter=None):
     last_name = " ".join(parts[1:]) if len(parts) > 1 else ""
 
     options = Options()
-    #options.add_argument("--headless=new")  # Run without browser window; remove to debug
+    options.add_argument("--headless=new")  # Run without browser window; remove to debug
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) using for personal USPORTS leaderboard project")
@@ -41,7 +41,6 @@ def search_sr_athletes(name, szn_year, club_filter=None):
 
         # Get table HTML
         table_html = driver.find_element(By.CLASS_NAME, "athleteSearch").get_attribute("outerHTML")
-        print("Table HTML:", table_html)  # Debug: see full table
 
         # Parse with BS4 for rows
         soup = BeautifulSoup(table_html, 'lxml')

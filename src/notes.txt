@@ -6,14 +6,18 @@ ULaval - prints last and first names glued together
 
 short term:
 
--> now i can get to season best page. need to store every athlete's url into db
--> need main to use db info (athlete info (name, uni, url)) 
 -> need to store pbs into db
+    -> good news, sr doesnt seem to ban me so thats cool
+    -> bad news, some athletes are not found due to clubs shown not being McGill (CAMO, Fr, etc.)
 -> possible issue: swimrankings blocks me for boting...maybe try to do 3-5 athletes at a time (other possible solns)
 
 
 long term:
 
--> find a way to get athlete lists for random unis (York, Carleton, etc.)
--> create front end for application
+-> create a ranking system (top 50) for each event, and for universities
+-> find a way to separate teams into 2 genders when they're not already separated
+-> find a way to get athlete lists for random unis (York, Carleton, etc.), upload all swimmers
+-> add relays to ranking
+-> create front end for application (simple, clear, easy to use)
 -> db should already add new swimmers after new season, but make it remove old ones...so it stays clean
+-> deploy on docker, make it run/update every week (mid week)

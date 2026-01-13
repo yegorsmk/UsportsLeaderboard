@@ -1,4 +1,3 @@
-import id_sear_test
 import requests
 from bs4 import BeautifulSoup
 
@@ -27,6 +26,8 @@ def athlete_szn_pbs(full_name, athlete_url):
 
     for row in rows:
         tds = row.find_all("td")
+        if len(tds) < 3:
+            continue
 
         event = tds[0].get_text(strip=True)
         course = tds[1].get_text(strip=True)

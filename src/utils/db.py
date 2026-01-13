@@ -39,17 +39,19 @@ def get_or_create_uni(name, roster_url=None, platform=None, team_gender=None):
     return university_id
     
 
-def get_or_create_athlete(full_name):
+def get_or_create_athlete(sr_id, full_name, profile_url):
     conn = get_connection()
     cur = conn.cursor()
 
 #SQL code to execute
     cur.execute("""
-        INSERT INTO athletes (full_name)
-        VALUES(%s)
-        ON CONFLICT (full_name) DO NOTHING
-        RETURNING id;
-    """, (full_name,))
+        INSERT INTO athletes (swimrankings_id, full_name, profile_url)
+        VALUES(%s, %s, %s)
+        ON CONFLICT (swimrankings_id) DO UPDATE SET
+                full_name = EXCLUDED.full_name,
+                profile_url = EXCLUDED.profile_url
+        RETURNING swimrankings_id;
+    """, (sr_id, full_name, profile_url))
 
     row = cur.fetchone()
 
@@ -71,11 +73,38 @@ def link_athlete_to_uni(athlete_id, university_id):
 
 #SQL code to execute
     cur.execute("""
-        INSERT INTO university_athletes(athlete_id, university_id)
+        INSERT INTO university_athletes(athlete_sr_id, university_id)
         VALUES(%s, %s)
-        ON CONFLICT (athlete_id, university_id) DO NOTHING;
+        ON CONFLICT (athlete_sr_id, university_id) DO NOTHING;
     """, (athlete_id, university_id))
 
     conn.commit()
     cur.close()
     conn.close()
+
+def insert_pb(athlete_id, event, time, course='25m', season=None):
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+                INSERT INTO personal_bests (athlete_sr_id, event, time, course, season)
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (athlete_sr_id, event, course, season) DO UPDATE SET
+                    time = EXCLUDED.time
+                """, (athlete_id, event, time, course, season))
+    
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def get_athlete_profile_url(athlete_sr_id):
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT profile_url FROM athletes WHERE swimrankings_id = %s", (athlete_sr_id))
+    row = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    return row[0] if row else None
