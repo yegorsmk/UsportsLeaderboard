@@ -8,7 +8,7 @@ def athlete_szn_pbs(full_name, athlete_url):
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
     }
 
-    response = requests.get(athlete_url, headers=headers, timeout=30)
+    response = requests.get(athlete_url, headers=headers, timeout=60)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     table = soup.find("table", class_="athleteBest")

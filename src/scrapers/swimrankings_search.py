@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import re
 import time
+import requests
 
 def search_sr_athletes(name, szn_year, club_filter=None):
     # Split name into first and last
@@ -66,15 +67,20 @@ def search_sr_athletes(name, szn_year, club_filter=None):
             club_td = row.find("td", class_="club")
             club = club_td.get_text(strip=True) if club_td else ""
 
+            match_found = False
             if club_filter and club_filter.lower() not in club.lower():
-                continue
+                match_found = True
+            else:
+                match_found = check_meet_history_club(athlete_id, club_filter)
+                time.sleep(2)
 
-            athletes.append({
-                "athlete_id": athlete_id,
-                "full_name": athlete_name,
-                "club": club,
-                "profile_url": f"https://www.swimrankings.net/index.php?page=athleteDetail&athleteId={athlete_id}&pbest={szn_year}",
-            })
+            if match_found:
+                athletes.append({
+                    "athlete_id": athlete_id,
+                    "full_name": athlete_name,
+                    "club": club,
+                    "profile_url": f"https://www.swimrankings.net/index.php?page=athleteDetail&athleteId={athlete_id}&pbest={szn_year}",
+                })
 
         return athletes
 
@@ -83,6 +89,38 @@ def search_sr_athletes(name, szn_year, club_filter=None):
         return []
     finally:
         driver.quit()
+
+
+def check_meet_history_club(athlete_id, club_filter):
+
+    meet_history_url = f"https://www.swimrankings.net/index.php?page=athleteDetail&athleteId={athlete_id}&athletePage=MEET"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (USPORTS scraper personal project)",
+    }
+
+    try:
+        response = requests.get(meet_history_url, headers=headers, timeout=15)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Failed to fetch meet history for athlete {athlete_id}: {e}")
+        return False
+    
+    soup = BeautifulSoup(response.text, 'html.parser')
+    table = soup.find("table", class_="athleteMeet")
+    if not table:
+        print(f"No meet table for athlete {athlete_id}")
+        return False
+    
+    club_tds = table.find_all("td", class_="club")
+    for td in club_tds:
+        club_text = td.get_text(strip=True).lower()
+        if club_filter.lower() in club_text:
+            return True
+        
+    return False
+    
+
 
 if __name__ == "__main__":
     norm_name = "Charles Bertrand"

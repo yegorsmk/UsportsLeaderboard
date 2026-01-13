@@ -6,11 +6,6 @@ ULaval - prints last and first names glued together
 
 short term:
 
--> need to store pbs into db
-    -> good news, sr doesnt seem to ban me so thats cool
-    -> bad news, some athletes are not found due to clubs shown not being McGill (CAMO, Fr, etc.)
--> possible issue: swimrankings blocks me for boting...maybe try to do 3-5 athletes at a time (other possible solns)
-
 
 long term:
 
